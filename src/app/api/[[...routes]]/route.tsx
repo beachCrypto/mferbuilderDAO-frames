@@ -303,12 +303,8 @@ app.transaction('/startAuction', async (c) => {
       abi: wagmiAbi,
       chainId: 'eip155:8453',
       // chainId: 'eip155:84532',
-      functionName: 'createBidWithReferral',
-      value: BigInt(parseEther(minBid.toString())),
-      args: [
-        BigInt(token),
-        '0x83f2af0f0ac4412f118b31f7dd596309b25b34dd',
-      ],
+      functionName: 'settleCurrentAndCreateNewAuction',
+      args: [],
       // to: '0x03855976fcb91bf23110e2c425dcfb1ba0635b79',
       to: '0x9e573b2cb501af606c40ee59ad4fede5ef4f0c5c',
     });
