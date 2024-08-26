@@ -12,6 +12,7 @@ import { base } from 'viem/chains';
 import { wagmiAbi } from '../../abi/wagmiAbi';
 import { metaDataAbi } from '../../abi/metaDataAbi';
 import axios from 'axios';
+import { parse } from 'path';
 
 // Airstack API Token
 export interface Env {
@@ -20,6 +21,7 @@ export interface Env {
 
 // contract variables
 let tokenURI: string;
+const reservePrice = formatEther(parseEther('.0069'));
 
 let auction: readonly [
   bigint,
@@ -166,8 +168,12 @@ app.frame('/join', async (c) => {
   bidRaw = auction[1];
   bid = formatEther(auction[1]);
 
-  minBid = Number(bid) / Number(minBidIncrementBigInt) + Number(bid);
-
+  if (bidRaw === BigInt(0)) {
+    minBid = Number(reservePrice);
+  } else {
+    minBid =
+      Number(bid) / Number(minBidIncrementBigInt) + Number(bid);
+  }
   // if auction is active show bid frame, else show
 
   if (Date.now() > auction[4] * 1000) {
@@ -289,7 +295,36 @@ app.transaction('/startAuction', async (c) => {
 });
 
 app.transaction('/mint', async (c) => {
+  try {
+    // Return auction from mferbuilderDAOToken
+    auction = await client.readContract({
+      address: '0x9e573b2cb501af606c40ee59ad4fede5ef4f0c5c',
+      abi: wagmiAbi,
+      functionName: 'auction',
+    });
+  } catch {}
+
+  try {
+    minBidIncrementBigInt = await client.readContract({
+      address: '0x9e573b2cb501af606c40ee59ad4fede5ef4f0c5c',
+      abi: wagmiAbi,
+      functionName: 'minBidIncrement',
+    });
+  } catch {}
+
+  token = auction[0].toString();
+  bidRaw = auction[1];
+  bid = formatEther(auction[1]);
   // Contract transaction response.
+
+  if (bidRaw === BigInt(0)) {
+    minBid = Number(reservePrice);
+  } else {
+    minBid =
+      Number(bid) / Number(minBidIncrementBigInt) + Number(bid);
+  }
+  // Contract transaction response.
+
   const balance = await client.getBalance({
     address: c.address as `0x${string}`,
   });
@@ -299,37 +334,6 @@ app.transaction('/mint', async (c) => {
       message: 'Insufficient balance',
     });
   }
-
-  try {
-    // Return auction from mferbuilderDAO
-    auction = await client.readContract({
-      address: '0x9e573b2cb501af606c40ee59ad4fede5ef4f0c5c',
-      abi: wagmiAbi,
-      functionName: 'auction',
-    });
-  } catch {
-    return c.error({
-      message: 'Could not read contract',
-    });
-  }
-
-  try {
-    minBidIncrementBigInt = await client.readContract({
-      address: '0x9e573b2cb501af606c40ee59ad4fede5ef4f0c5c',
-      abi: wagmiAbi,
-      functionName: 'minBidIncrement',
-    });
-  } catch {
-    return c.error({
-      message: 'Could not read contract',
-    });
-  }
-
-  token = auction[0].toString();
-  bidRaw = auction[1];
-  bid = formatEther(auction[1]);
-
-  minBid = Number(bid) / Number(minBidIncrementBigInt) + Number(bid);
 
   try {
     return c.contract({
