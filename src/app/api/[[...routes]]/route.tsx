@@ -206,7 +206,7 @@ app.frame('/join', async (c) => {
         <Button.Transaction target={`/startAuction`}>
           Start next auction
         </Button.Transaction>,
-        <Button.Link href="https://warpcast.com/~/compose?embeds%5B%5D=https%3A%2F%2Fmferbuilderdao-frames.pages.dev%2Fapi&text=do+something+mfer!+start+the+next+mferbuilder+dao+auction+-+frame+by+%40beachcrypto">
+        <Button.Link href="https://warpcast.com/~/compose?embeds%5B%5D=https%3A%2F%2Fmferbuilderdao-frames.pages.dev%2Fapi&text=do+something+mfer!+start+the+next+mferbuilder+dao+auction+from+the+feed+-+frame+by+%40beachcrypto">
           Share
         </Button.Link>,
       ],
