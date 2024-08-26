@@ -261,15 +261,15 @@ app.frame('/join', async (c) => {
 
 app.transaction('/startAuction', async (c) => {
   // Contract transaction response.
-  // const balance = await client.getBalance({
-  //   address: c.address as `0x${string}`,
-  // });
+  const balance = await client.getBalance({
+    address: c.address as `0x${string}`,
+  });
 
-  // if (BigInt(balance) < BigInt(parseEther(minBid.toString()))) {
-  //   return c.error({
-  //     message: 'Insufficient balance',
-  //   });
-  // }
+  if (BigInt(balance) < BigInt(parseEther(minBid.toString()))) {
+    return c.error({
+      message: 'Insufficient balance',
+    });
+  }
 
   try {
     try {
@@ -286,18 +286,6 @@ app.transaction('/startAuction', async (c) => {
     }
 
     token = auction[0].toString();
-
-    let address = c.address;
-    // Contract transaction response.
-    const balance = await client.getBalance({
-      address: c.address as `0x${string}`,
-    });
-
-    if (BigInt(balance) < BigInt(parseEther(minBid.toString()))) {
-      return c.error({
-        message: 'Insufficient balance',
-      });
-    }
 
     return c.contract({
       abi: wagmiAbi,
@@ -316,6 +304,17 @@ app.transaction('/startAuction', async (c) => {
 });
 
 app.transaction('/mint', async (c) => {
+  // Contract transaction response.
+  const balance = await client.getBalance({
+    address: c.address as `0x${string}`,
+  });
+
+  if (BigInt(balance) < BigInt(parseEther(minBid.toString()))) {
+    return c.error({
+      message: 'Insufficient balance',
+    });
+  }
+
   try {
     // Return auction from mferbuilderDAO
     auction = await client.readContract({
@@ -346,18 +345,6 @@ app.transaction('/mint', async (c) => {
   bid = formatEther(auction[1]);
 
   minBid = Number(bid) / Number(minBidIncrementBigInt) + Number(bid);
-
-  let address = c.address;
-  // Contract transaction response.
-  const balance = await client.getBalance({
-    address: c.address as `0x${string}`,
-  });
-
-  if (BigInt(balance) < BigInt(parseEther(minBid.toString()))) {
-    return c.error({
-      message: 'Insufficient balance',
-    });
-  }
 
   try {
     return c.contract({
