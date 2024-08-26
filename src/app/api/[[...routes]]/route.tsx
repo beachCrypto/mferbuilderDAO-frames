@@ -272,21 +272,6 @@ app.transaction('/startAuction', async (c) => {
   }
 
   try {
-    try {
-      // Return auction from mferbuilderDAO
-      auction = await client.readContract({
-        address: '0x9e573b2cb501af606c40ee59ad4fede5ef4f0c5c',
-        abi: wagmiAbi,
-        functionName: 'auction',
-      });
-    } catch {
-      return c.error({
-        message: 'Transaction failed',
-      });
-    }
-
-    token = auction[0].toString();
-
     return c.contract({
       abi: wagmiAbi,
       chainId: 'eip155:8453',
