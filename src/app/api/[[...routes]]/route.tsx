@@ -266,6 +266,34 @@ app.frame('/join', async (c) => {
 });
 
 app.transaction('/startAuction', async (c) => {
+  try {
+    // Return auction from mferbuilderDAOToken
+    auction = await client.readContract({
+      address: '0x9e573b2cb501af606c40ee59ad4fede5ef4f0c5c',
+      abi: wagmiAbi,
+      functionName: 'auction',
+    });
+  } catch {}
+
+  try {
+    minBidIncrementBigInt = await client.readContract({
+      address: '0x9e573b2cb501af606c40ee59ad4fede5ef4f0c5c',
+      abi: wagmiAbi,
+      functionName: 'minBidIncrement',
+    });
+  } catch {}
+
+  token = auction[0].toString();
+  bidRaw = auction[1];
+  bid = formatEther(auction[1]);
+
+  if (bidRaw === BigInt(0)) {
+    minBid = Number(reservePrice);
+  } else {
+    minBid =
+      Number(bid) / Number(minBidIncrementBigInt) + Number(bid);
+  }
+  // if auction is active show bid frame, else show
   // Contract transaction response.
   const balance = await client.getBalance({
     address: c.address as `0x${string}`,
