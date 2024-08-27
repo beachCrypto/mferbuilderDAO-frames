@@ -75,14 +75,6 @@ app.frame('/', async (c) => {
     });
   } catch {}
 
-  try {
-    minBidIncrementBigInt = await client.readContract({
-      address: '0x9e573b2cb501af606c40ee59ad4fede5ef4f0c5c',
-      abi: wagmiAbi,
-      functionName: 'minBidIncrement',
-    });
-  } catch {}
-
   token = auction[0].toString();
 
   // Return tokenURI from mferbuilderDAO
@@ -212,6 +204,9 @@ app.frame('/join', async (c) => {
         <Button.Transaction target={`/startAuction`}>
           Start next auction
         </Button.Transaction>,
+        <Button.Link href="https://nouns.build/dao/base/0xC9a73a58E011876aEF3f685346AfC77fbEE58bE4?referral=0x83f2af0F0aC4412F118B31f7dd596309B25b34Dd">
+          Learn more
+        </Button.Link>,
         <Button.Link href="https://warpcast.com/~/compose?embeds%5B%5D=https%3A%2F%2Fmferbuilderdao-frames.pages.dev%2Fapi&text=do+something+mfer!+start+the+next+mferbuilder+dao+auction+from+the+feed+-+frame+by+%40beachcrypto">
           Share
         </Button.Link>,
