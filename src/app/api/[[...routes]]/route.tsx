@@ -124,10 +124,6 @@ app.frame('/', async (c) => {
 
   const mferbuilderDAOToken = (await axios.get(tokenURI)).data;
 
-  console.log('mferbuilderDAOToken', mferbuilderDAOToken);
-
-  console.log('image', mferbuilderDAOToken.image);
-
   return c.res({
     image: mferbuilderDAOToken.image,
     intents: [
@@ -279,22 +275,14 @@ app.transaction('/startAuction', async (c) => {
   } catch {}
 
   token = auction[0].toString();
-  bidRaw = auction[1];
-  bid = formatEther(auction[1]);
 
-  if (bidRaw === BigInt(0)) {
-    minBid = Number(reservePrice);
-  } else {
-    minBid =
-      Number(bid) / Number(minBidIncrementBigInt) + Number(bid);
-  }
   // if auction is active show bid frame, else show
   // Contract transaction response.
   const balance = await client.getBalance({
     address: c.address as `0x${string}`,
   });
 
-  if (BigInt(balance) < BigInt(parseEther(minBid.toString()))) {
+  if (balance < BigInt(parseEther(reservePrice))) {
     return c.error({
       message: 'Insufficient balance',
     });
