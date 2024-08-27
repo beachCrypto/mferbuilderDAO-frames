@@ -205,7 +205,7 @@ app.frame('/join', async (c) => {
           Start next auction
         </Button.Transaction>,
         <Button.Link href="https://nouns.build/dao/base/0xC9a73a58E011876aEF3f685346AfC77fbEE58bE4?referral=0x83f2af0F0aC4412F118B31f7dd596309B25b34Dd">
-          Learn more
+          mferbuilderDAO Auction page
         </Button.Link>,
         <Button.Link href="https://warpcast.com/~/compose?embeds%5B%5D=https%3A%2F%2Fmferbuilderdao-frames.pages.dev%2Fapi&text=do+something+mfer!+start+the+next+mferbuilder+dao+auction+from+the+feed+-+frame+by+%40beachcrypto">
           Share
@@ -251,7 +251,7 @@ app.frame('/join', async (c) => {
         Bid {minBid.toString()}
       </Button.Transaction>,
       <Button.Link href="https://nouns.build/dao/base/0xC9a73a58E011876aEF3f685346AfC77fbEE58bE4?referral=0x83f2af0F0aC4412F118B31f7dd596309B25b34Dd">
-        Auction
+        mferbuilderDAO Auction page
       </Button.Link>,
       <Button.Link href="https://warpcast.com/~/compose?embeds%5B%5D=https%3A%2F%2Fmferbuilderdao-frames.pages.dev%2Fapi&text=do+something+mfer!+start+or+bid+on+mferbuilder+dao+auctions+from+the+feed+-+frame+by+%40beachcrypto">
         Share
