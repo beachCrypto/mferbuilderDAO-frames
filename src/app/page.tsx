@@ -4,6 +4,10 @@ import Image from 'next/image';
 
 import styles from './page.module.css';
 
+const now = Date.now();
+
+const shareURL = `https://warpcast.com/~/compose?embeds%5B%5D=https%3A%2F%2Fmferbuilderdao-frames.pages.dev%2Fapi?${now}&text=do+something+mfer!+start+the+next+mferbuilder+dao+auction+from+the+feed+-+frame+by+%40beachmfer.eth`
+
 export async function generateMetadata(): Promise<Metadata> {
   const frameTags = await getFrameMetadata(
     `${process.env.VERCEL_URL || 'http://localhost:3000'}/api`
@@ -53,13 +57,18 @@ export default function Home() {
           </a>
         </div>
       </div> */}
-
-      <div className={styles.button1}>
-        <a href="https://nouns.build/dao/base/0xC9a73a58E011876aEF3f685346AfC77fbEE58bE4?referral=0x83f2af0F0aC4412F118B31f7dd596309B25b34Dd">
-          <p>mferbuilderDAO</p>
-        </a>
+      <div className={ styles.card}>
+        <div className={styles.button1}>
+          <a href="https://nouns.build/dao/base/0xC9a73a58E011876aEF3f685346AfC77fbEE58bE4?referral=0x83f2af0F0aC4412F118B31f7dd596309B25b34Dd">
+            <h2>mferbuilderDAO</h2>
+          </a>
+        </div>
+        <div className={styles.button1}>
+            <a href={shareURL}>
+            <h2>Share mfer builderdao Frame</h2>
+          </a>
+        </div>
       </div>
-
       {/* <div className={styles.grid}>
         <a
           href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"

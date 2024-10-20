@@ -14,6 +14,11 @@ import { metaDataAbi } from '../../abi/metaDataAbi';
 import axios from 'axios';
 import { parse } from 'path';
 
+const now = Date.now();
+
+const shareURL = `https://warpcast.com/~/compose?embeds%5B%5D=https%3A%2F%2Fmferbuilderdao-frames.pages.dev%2Fapi?${now}&text=do+something+mfer!+start+the+next+mferbuilder+dao+auction+from+the+feed+-+frame+by+%40beachmfer.eth`
+
+
 // Airstack API Token
 export interface Env {
   AIRSTACK_API_TOKEN: string;
@@ -203,7 +208,7 @@ app.frame('/join', async (c) => {
         <Button.Link href="https://nouns.build/dao/base/0xC9a73a58E011876aEF3f685346AfC77fbEE58bE4?referral=0x83f2af0F0aC4412F118B31f7dd596309B25b34Dd">
           mferbuilderDAO Auction page
         </Button.Link>,
-        <Button.Link href="https://warpcast.com/~/compose?embeds%5B%5D=https%3A%2F%2Fmferbuilderdao-frames.pages.dev%2Fapi&text=do+something+mfer!+start+the+next+mferbuilder+dao+auction+from+the+feed+-+frame+by+%40beachmfer.eth">
+        <Button.Link href={shareURL}>
           Share
         </Button.Link>,
       ],
